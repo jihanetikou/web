@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>PrimeFaces</title>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+
+            <p:layout fullPage="true">
+
+
+                 <p:layoutUnit position="west" size="250" header="Menu" collapsible="true">
+                    <h:form id="form2">
+                        <p:menu>
+                            <p:submenu label="Navigations">
+                                <p:menuitem value="phones" outcome="phone.xhtml" icon="ui-icon-star"/>
+                                <p:menuitem value="position" outcome="position.xhtml" icon="ui-icon-star"/> 
+                               <p:menuitem value="charts" outcome="charts.xhtml" icon="ui-icon-star"/> 
+                                  <p:menuitem value="map" outcome="map.xhtml" icon="ui-icon-star"/> 
+                            </p:submenu>
+                        </p:menu> 
+                    </h:form>
+                </p:layoutUnit>
+
+
+                <p:layoutUnit position="center">
+                    <p:panel>
+                        <p:panelGrid columns="2">
+                            <p:panelGrid columns="1">
+                                <h:form id="form3">
+                                    <p:panel header="Rechercher des smartphones par utilisateur">
+                                        <p:panelGrid columns="2">
+                                            <p:outputLabel value="Utilisateurs :"/>
+                                            <p:selectOneMenu value="#{phonebean.user.idUser}" required="true" >
+                                                <f:selectItem itemLabel="Select One" itemValue=""/>
+                                                <f:selectItems value="#{phonebean.findallUsers()}" var="s"
+                                                               itemLabel="#{s.nom}" itemValue="#{s.idUser}"/>
+                                                <p:ajax event="change" listener="#{phonebean.load()}" update=":form:tab"/>
+                                                               
+                                            </p:selectOneMenu>
+
+
+                                        </p:panelGrid>
+                                    </p:panel>
+                                </h:form>
+                                <h:form id="form">
+
+                                    <p:growl id="messages" showDetail="true"/>
+
+                                    <p:dataTable var="m" value="#{phonebean.list}" id="tab" editable="true" paginator="true"  
+                                                >
+
+                                        <f:facet name="header">
+                                            Liste des Smartphone par utilisateur
+                                        </f:facet>
+
+                                        <p:column headerText="Imei" style="width:30%">
+                                            <p:cellEditor>
+                                                <f:facet name="output">
+                                                    <h:outputText value="#{m.imei}" />
+                                                </f:facet>
+                                                <f:facet name="input">
+                                                    <p:inputText value="#{m.imei}" style="width:100%"/>
+                                                </f:facet>
+                                            </p:cellEditor>
+                                        </p:column>
+
+                                
+
+                                      
+
+                                   
+
+                                        
+
+
+                                    </p:dataTable>
+                                </h:form>
+                            </p:panelGrid>
+                            
+                      
+                        </p:panelGrid>
+                    </p:panel>    
+
+
+
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:body>
+
+    </f:view>
+</html>
